@@ -26,6 +26,8 @@ const char START_CHECKER_POS_CH = '2';
 const char PRESENCE_OF_CHECKER_CH = '1';
 const char FREE_SPACE_CH = '0';
 const int FIELD_SIZE = 8;
+const std::string INPUT = "INPUT.txt";
+const std::string OUTPUT = "OUTPUT.txt";
 
 std::vector <std::vector<char>>
 ReadFieldFromFile(const std::string& fileName)
@@ -166,7 +168,7 @@ int FindAllWaysToBitOthersFromCertPos(std::vector<std::vector<char>> field)
                 if (ThereIsNeigbCheker(newCol, newRow, field, possibleColChange, possibleRowChange, i))
                 {
                     RemoveBattledChecker(newCol, newRow, field, possibleColChange, possibleRowChange, i);
-                    maxWays++;
+                    maxWays++;                                       //считает при любой добавке в очередь
                     runQueue.push({ newRow, newCol });
                 }
             }
@@ -177,7 +179,7 @@ int FindAllWaysToBitOthersFromCertPos(std::vector<std::vector<char>> field)
 
 int main()
 {
-    std::vector<std::vector<char>> field = ReadFieldFromFile("DATA.txt");
+    std::vector<std::vector<char>> field = ReadFieldFromFile(INPUT);
     /*for (const auto& vec : field) 
     {
         for (char num : vec) 
@@ -187,7 +189,7 @@ int main()
         std::cout << std::endl;
     }*/
     int maxMoves = FindAllWaysToBitOthersFromCertPos(field);
-    WriteOutputInFile("OUTPUT.txt", maxMoves);
+    WriteOutputInFile(OUTPUT, maxMoves);
     return 0;
 }
 

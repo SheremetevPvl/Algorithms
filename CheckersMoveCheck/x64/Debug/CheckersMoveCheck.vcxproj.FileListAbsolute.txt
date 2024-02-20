@@ -1,1 +1,2 @@
 D:\Algoritms\CheckersMoveCheck\x64\Debug\CheckersMoveCheck.exe
+D:\Algorithms2\Algorithms\CheckersMoveCheck\x64\Debug\CheckersMoveCheck.exe
