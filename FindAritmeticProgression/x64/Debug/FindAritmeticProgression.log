@@ -1,0 +1,3 @@
+﻿  FindAritmeticProgression.cpp
+D:\Algorithms2\Algorithms\FindAritmeticProgression\FindAritmeticProgression.cpp(73): warning C4715: CheckProgrAndGetIt: значение возвращается не при всех путях выполнения
+  FindAritmeticProgression.vcxproj -> D:\Algorithms2\Algorithms\FindAritmeticProgression\x64\Debug\FindAritmeticProgression.exe
