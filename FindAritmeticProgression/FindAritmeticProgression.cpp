@@ -15,8 +15,9 @@ M последовательных членов несчастливой ари�
 #include <string>
 #include <fstream>
 #include <vector>
+#include <ctime>
 
-const std::string INPUT_FILE_NAME = "Input.txt";
+const std::string INPUT_FILE_NAME = "INPUT5.txt";
 const std::string OUTPUT_FILE_NAME = "Output.txt";
 const std::string FILE_IS_MISSING_MSG = "Input file is missing";
 const std::string MIN_LIMIT_IS_REACHED_MSG = "Quality of num is too small";
@@ -29,14 +30,16 @@ const int MAX_NUM = 65000;
 struct ArrRec
 {
 	int num;
-	int order;
+	std::vector<int> order;
 };
 
 int CheckProgrAndGetIt(std::vector<ArrRec>& numRow, int maxProgr, int num, std::vector<int>& progression, bool& found)
 {
-	//bool progrStart = false;
+	int testNum = 0;
 	int numOfProgrMem = 1;
-	int order = numRow[num].order;
+	//int order = numRow[num].order;
+	int vecIndex = numRow[num].order.size();
+	int order = numRow[num].order[vecIndex - 1];
 	progression.push_back(num);
 	while (numOfProgrMem < maxProgr)
 	{
@@ -50,7 +53,26 @@ int CheckProgrAndGetIt(std::vector<ArrRec>& numRow, int maxProgr, int num, std::
 			}
 			else
 			{
-				if (numRow[num].order < order)
+				for (int i = 1; i < numRow[num].order.size(); i++)
+				{
+					int tempOrder = numRow[num].order[i];
+					if (tempOrder < order)
+					{
+						order = tempOrder;
+						progression.push_back(num);
+						numOfProgrMem++;
+						break;
+					}
+					else
+					{
+						if (i == numRow[num].order.size() - 1)                      //выход в случае просмотра всех порядков
+						{
+							progression.clear();
+							return 0;
+						}
+					}
+				}
+				/*if (numRow[num].order < order)
 				{
 					order = numRow[num].order;
 					progression.push_back(num);
@@ -60,7 +82,7 @@ int CheckProgrAndGetIt(std::vector<ArrRec>& numRow, int maxProgr, int num, std::
 				{
 					progression.clear();
 					return 0;
-				}
+				}*/
 			}
 		}
 		else
@@ -72,10 +94,10 @@ int CheckProgrAndGetIt(std::vector<ArrRec>& numRow, int maxProgr, int num, std::
 	found = true;
 }
 
-void GoThroughInputAndFindProg(std::fstream& input, std::fstream& output, int maxProgr)
+void GoThroughInputAndFindProg(std::ifstream& input, std::ofstream& output, int maxProgr)
 {
 	std::vector<int>unluckProgression;
-	const ArrRec startRec = { -1, 0 };
+	const ArrRec startRec = { -1, {0} };
 	std::vector<ArrRec> numRow(MAX_NUM, startRec);
 	bool found = false;
 	int numOrder(0);
@@ -87,7 +109,8 @@ void GoThroughInputAndFindProg(std::fstream& input, std::fstream& output, int ma
 		if ((num >= 1) && (num <= MAX_NUM))
 		{
 			numRow[num].num = num;
-			numRow[num].order = numOrder;
+			numRow[num].order.push_back(numOrder);
+			//numRow[num].order = numOrder;
 			CheckProgrAndGetIt(numRow, maxProgr, num, unluckProgression, found);
 		}
 		else
@@ -112,7 +135,9 @@ void GoThroughInputAndFindProg(std::fstream& input, std::fstream& output, int ma
 
 int main()
 {
-	std::fstream inputFile(INPUT_FILE_NAME), outputFile(OUTPUT_FILE_NAME);
+	clock_t start = clock();
+	std::ofstream outputFile(OUTPUT_FILE_NAME);
+	std::ifstream inputFile(INPUT_FILE_NAME);
 	if (inputFile.is_open())
 	{
 		std::string line;
@@ -136,15 +161,8 @@ int main()
 	{
 		std::cout << FILE_IS_MISSING_MSG;
 	}
+	clock_t end = clock();
+	double seconds = (double)(end - start) / CLOCKS_PER_SEC;
+	std::cout << "time: " << seconds << std::endl;
+	return 1;
 }
-
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.

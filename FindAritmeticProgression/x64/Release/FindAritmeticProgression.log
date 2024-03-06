@@ -1,0 +1,8 @@
+﻿  FindAritmeticProgression.cpp
+D:\Algorithms2\Algorithms\FindAritmeticProgression\FindAritmeticProgression.cpp(41,15): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+  Создание кода
+  10 of 309 functions ( 3.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Создание кода завершено
+  FindAritmeticProgression.vcxproj -> D:\Algorithms2\Algorithms\FindAritmeticProgression\x64\Release\FindAritmeticProgression.exe
